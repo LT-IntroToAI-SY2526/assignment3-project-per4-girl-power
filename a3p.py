@@ -4,21 +4,21 @@ from typing import List, Tuple, Callable, Any
 
 # The projection functions, that give us access to certain parts of a "quarterback" (a tuple)
 def get_player(quarterback):
-    return(qb[0])
+    return(quarterback[0])
 def get_team(quarterback):
-    return(qb[1])
+    return(quarterback[1])
 def get_division(quarterback):
-    return(qb[2])
+    return(quarterback[2])
 def get_pass_yds(quarterback):
-    return(qb[3])
+    return(quarterback[3])
 def get_comp_pct(quarterback):
-    return(qb[4])
+    return(quarterback[4])
 def get_tds(quarterback):
-    return(qb[5])
+    return(quarterback[5])
 def get_inters(quarterback):
-    return(qb[6])
+    return(quarterback[6])
 def get_sacks(quarterback):
-    return(qb[7])
+    return(quarterback[7])
 
 # STATS BY PLAYER NAME
 
