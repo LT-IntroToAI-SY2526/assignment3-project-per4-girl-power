@@ -94,3 +94,77 @@ def sacks_by_qb(matches):
 # who in the % had the fewest interceptions
     # qb_with_fewest_inters_in_division(matches[0])
     # returns List[str]
+
+# BYE ACTION
+def bye_action(dummy: List[str]) -> None:
+    raise KeyboardInterrupt
+
+# The pattern-action list for the natural language query system A list of tuples of
+# pattern and action It must be declared here, after all of the function definitions
+pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
+    (str.split("what team did % play for"), team_by_qb),
+    (str.split("how many pass yards did % have"), pass_yds_by_qb),
+    (str.split("what was %'s completion percentage"), comp_pct_by_qb),
+    (str.split("how many touchdowns did % have"), tds_by_qb),
+    (str.split("how many interceptions did % throw"), inters_by_qb),
+    (str.split("how many sacks did % take"), sacks_by_qb),
+    (["bye"], bye_action),
+]
+
+
+def search_pa_list(src: List[str]) -> List[str]:
+    """Takes source, finds matching pattern and calls corresponding action. If it finds
+    a match but has no answers it returns ["No answers"]. If it finds no match it
+    returns ["I don't understand"].
+
+    Args:
+        source - a phrase represented as a list of words (strings)
+
+    Returns:
+        a list of answers. Will be ["I don't understand"] if it finds no matches and
+        ["No answers"] if it finds a match but no answers
+    """
+    for pattern, action in pa_list:
+        result_matches = match(pattern, src)
+        
+        if result_matches is not None:
+            # Found a matching pattern
+            try:
+                answers = action(result_matches)
+                
+                # Handle None return
+                if answers is None:
+                    return ["No answers"]
+                
+                # Handle empty list
+                if len(answers) == 0:
+                    return ["No answers"]
+                
+                # Convert all answers to strings
+                return [str(answer) for answer in answers]
+            
+            except KeyboardInterrupt:
+                # bye_action raises this
+                raise
+    
+    # No pattern matched
+    return ["I don't understand"]
+
+
+def query_loop() -> None:
+    """The simple query loop. The try/except structure is to catch Ctrl-C or Ctrl-D
+    characters and exit gracefully.
+    """
+    print("Welcome to the movie database!\n")
+    while True:
+        try:
+            print()
+            query = input("Your query? ").replace("?", "").lower().split()
+            answers = search_pa_list(query)
+            for ans in answers:
+                print(ans)
+
+        except (KeyboardInterrupt, EOFError):
+            break
+
+    print("\nSo long!\n")
