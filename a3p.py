@@ -51,7 +51,7 @@ def tds_by_qb(matches):
     search_qb = matches[0]
     for quarterback in qb_db:
         if get_player(quarterback) == search_qb:
-            return [get_comp_pct(quarterback)]
+            return [get_pass_yds(quarterback)]
     return []
 
 # how many interceptions did % throw
@@ -155,7 +155,7 @@ def query_loop() -> None:
     """The simple query loop. The try/except structure is to catch Ctrl-C or Ctrl-D
     characters and exit gracefully.
     """
-    print("Welcome to the movie database!\n")
+    print("Welcome to the quarterback database!\n")
     while True:
         try:
             print()
