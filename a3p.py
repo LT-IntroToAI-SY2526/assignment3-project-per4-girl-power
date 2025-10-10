@@ -1,4 +1,4 @@
-from quarterbacks import qb_db
+from  quarterbacks import qb_db
 from match import match
 from typing import List, Tuple, Callable, Any
 
@@ -74,17 +74,46 @@ def sacks_by_qb(matches):
 # what quarterbacks had more than _ touchdowns
     # qbs_with_more_tds(matches[0])
     # returns List[str]
+def qbs_with_more_tds(matches):
+    result = []
+    min_tds = matches[0]
+    for quarterback in qb_db:
+       if(get_tds(quarterback) > min_tds):
+           result.append(get_player(quarterback))
+    return result
+
+    
 # what quarterbacks had more than _ passing yards
     # qbs_with_more_pass_yds(matches[0])
     # returns List[str]
 # what quarterbacks had fewer than _ interceptions
     # qbs_with_fewer_inters(matches[0])
+def qbs_with_fewer_inters(matches):
+    result = []
+    max_inters = matches[0]
+    for quarterback in qb_db:
+       if(get_inters(quarterback) < max_inters):
+           result.append(get_player(quarterback))
+    return result
+
+
     # returns List[str]
+
+
 # what quarterbacks had fewer than _ sacks
     # qbs_with_fewer_sacks(matches[0])
     # returns List[str]
-
+def qb_with_fewer_sacks(matches):
+    result = []
+    max_sacks = matches[0]
+    for quarterback in qb_db:
+       if(get_sacks(quarterback) < max_sacks):
+           result.append(get_player(quarterback))
+    return result
+    
+            
 # DIVISION SUPERLATIVES
+
 # who in the % had the most passing yards
     # qb_with_most_pass_yds_in_division(matches[0])
     # returns List[str]
@@ -108,6 +137,9 @@ pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
     (str.split("how many touchdowns did % have"), tds_by_qb),
     (str.split("how many interceptions did % throw"), inters_by_qb),
     (str.split("how many sacks did % take"), sacks_by_qb),
+    (str.split("what quarterbacks had more than _ touchdowns"), qbs_with_more_tds),
+    (str.split("what quarterbacks had fewer than _ interceptions"), qbs_with_fewer_inters),
+    (str.split("what quarterbacks had fewer than _ sacks"), qb_with_fewer_sacks),
     (["bye"], bye_action),
 ]
 
@@ -168,3 +200,4 @@ def query_loop() -> None:
             break
 
     print("\nSo long!\n")
+query_loop()
