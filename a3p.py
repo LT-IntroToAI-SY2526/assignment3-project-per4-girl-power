@@ -71,6 +71,7 @@ def sacks_by_qb(matches):
     return []
 
 # QBS WITH THRESHOLD STATS
+
 # what quarterbacks had more than _ touchdowns
     # qbs_with_more_tds(matches[0])
     # returns List[str]
@@ -86,6 +87,13 @@ def qbs_with_more_tds(matches):
 # what quarterbacks had more than _ passing yards
     # qbs_with_more_pass_yds(matches[0])
     # returns List[str]
+def qbs_with_more_pass_yds(matches):
+    result = []
+    min_pass_yds = int(matches[0])
+    for quarterback in qb_db:
+        if(get_pass_yds(quarterback) > min_pass_yds):
+            result.append(get_player(quarterback))
+    return result
 
 # what quarterbacks had fewer than _ interceptions
     # qbs_with_fewer_inters(matches[0])
@@ -139,6 +147,7 @@ pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
     (str.split("how many interceptions did % throw"), inters_by_qb),
     (str.split("how many sacks did % take"), sacks_by_qb),
     (str.split("what quarterbacks had more than _ touchdowns"), qbs_with_more_tds),
+    (str.split("what quarterbacks had more than _ passing yards"), qbs_with_more_pass_yds),
     (str.split("what quarterbacks had fewer than _ interceptions"), qbs_with_fewer_inters),
     (str.split("what quarterbacks had fewer than _ sacks"), qbs_with_fewer_sacks),
     (["bye"], bye_action),
