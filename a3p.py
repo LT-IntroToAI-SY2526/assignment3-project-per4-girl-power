@@ -51,7 +51,7 @@ def tds_by_qb(matches):
     search_qb = matches[0]
     for quarterback in qb_db:
         if get_player(quarterback) == search_qb:
-            return [get_pass_yds(quarterback)]
+            return [get_tds(quarterback)]
     return []
 
 # how many interceptions did % throw
@@ -76,7 +76,7 @@ def sacks_by_qb(matches):
     # returns List[str]
 def qbs_with_more_tds(matches):
     result = []
-    min_tds = matches[0]
+    min_tds = int(matches[0])
     for quarterback in qb_db:
        if(get_tds(quarterback) > min_tds):
            result.append(get_player(quarterback))
@@ -86,11 +86,12 @@ def qbs_with_more_tds(matches):
 # what quarterbacks had more than _ passing yards
     # qbs_with_more_pass_yds(matches[0])
     # returns List[str]
+
 # what quarterbacks had fewer than _ interceptions
     # qbs_with_fewer_inters(matches[0])
 def qbs_with_fewer_inters(matches):
     result = []
-    max_inters = matches[0]
+    max_inters = int(matches[0])
     for quarterback in qb_db:
        if(get_inters(quarterback) < max_inters):
            result.append(get_player(quarterback))
@@ -103,9 +104,9 @@ def qbs_with_fewer_inters(matches):
 # what quarterbacks had fewer than _ sacks
     # qbs_with_fewer_sacks(matches[0])
     # returns List[str]
-def qb_with_fewer_sacks(matches):
+def qbs_with_fewer_sacks(matches):
     result = []
-    max_sacks = matches[0]
+    max_sacks = int(matches[0])
     for quarterback in qb_db:
        if(get_sacks(quarterback) < max_sacks):
            result.append(get_player(quarterback))
@@ -139,7 +140,7 @@ pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
     (str.split("how many sacks did % take"), sacks_by_qb),
     (str.split("what quarterbacks had more than _ touchdowns"), qbs_with_more_tds),
     (str.split("what quarterbacks had fewer than _ interceptions"), qbs_with_fewer_inters),
-    (str.split("what quarterbacks had fewer than _ sacks"), qb_with_fewer_sacks),
+    (str.split("what quarterbacks had fewer than _ sacks"), qbs_with_fewer_sacks),
     (["bye"], bye_action),
 ]
 
